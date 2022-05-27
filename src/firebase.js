@@ -4,7 +4,7 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCtTV_FcOxwH9jEg-y4IYt5lql6S_cLa3E",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "healthy-heels-809aa.firebaseapp.com",
   projectId: "healthy-heels-809aa",
   storageBucket: "healthy-heels-809aa.appspot.com",
