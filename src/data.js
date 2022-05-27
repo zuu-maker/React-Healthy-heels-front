@@ -43,19 +43,19 @@ export const slides = [
     {
         title:"Casual Shoes",
         desc:"Shop your Favourite trainers right here,for the lowest prices!!",
-        image:"/images/casual2.png",
+        image:"/images/casual2.webp",
         bg:"#f5fafd"
     },
     {
         title:"Casual Shoes",
         desc:"Shop your Favourite trainers right here,for the lowest prices!!",
-        image:"/images/casual2.png",
+        image:"/images/casual2.webp",
         bg:"#fcf1ed"
     },
     {
         title:"Casual Shoes",
         desc:"Shop your Favourite trainers right here,for the lowest prices!!",
-        image:"/images/casual2.png",
+        image:"/images/casual2.webp",
         bg:"#f5fafd"
     }, 
     {
