@@ -1,0 +1,136 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.products-container {
+  /* overflow: scroll; */
+  background-color: whitesmoke;
+  overflow: scroll;
+  height: 260px;
+  margin-bottom: 1rem !important;
+}
+
+.products-container::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mainColor {
+  color: #0e5d3b;
+  cursor: pointer;
+}
+
+.whatsappColor {
+  cursor: pointer;
+  margin-right: 0.5rem;
+  color: #25d366;
+}
+
+.instagramColor {
+  cursor: pointer;
+  margin-right: 0.5rem;
+  color: #833ab4;
+}
+
+.facebookColor {
+  cursor: pointer;
+  margin-right: 0.5rem;
+  color: #3b5998;
+}
+
+.instagramColor:hover {
+  transform: scale(1.2);
+  transition: all 0.2s 0.5s ease-in-out;
+}
+
+.facebookColor:hover {
+  transform: scale(1.2);
+  transition: all 0.2s 0.5s ease-in-out;
+}
+
+.whatsappColor:hover {
+  transform: scale(1.2);
+  transition: all 0.2s 0.5s ease-in-out;
+}
+
+.goldColor {
+  color: #afa415;
+  /* font-size: 4px !important; */
+  cursor: pointer;
+}
+
+.heartColor {
+  /* color:transparent; */
+  opacity: 0.25;
+  cursor: pointer;
+}
+
+.heartColor:hover {
+  /* color: #C42727; */
+  color: #0e5d3b;
+  opacity: 0.75;
+}
+
+.heartColorPress {
+  color: #0e5d3b;
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+.arrowLeft {
+  z-index: 100;
+  transform: rotate(40deg) !important;
+  position: absolute;
+  bottom: 3px;
+  left: 156px;
+  color: #ffffff;
+}
+
+.arrowRight {
+  z-index: 100;
+  transform: rotate(40deg) !important;
+  position: absolute;
+  bottom: 3px;
+  left: 135px;
+  color: #ffffff;
+}
+
+.slider img {
+  height: 23.4rem !important;
+  /* width: 850px; */
+  object-fit: cover;
+}
