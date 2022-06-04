@@ -12,9 +12,9 @@ function Footer() {
                 <div>
                     <Image src="/images/logo.png" alt="" />
                 </div>
-                <div>
-                    <p style={{fontSize:'0.8rem'}}>© 2021 healthyheels.com. All rights reserved.</p>
-                </div>
+                <RightsContainer>
+                    <p >© 2021 healthyheels.com. All rights reserved.</p>
+                </RightsContainer>
                 <SocialIcons
                 >
                     <InstagramIcon  className="instagramColor"  />
@@ -44,20 +44,32 @@ const Container = styled.div`
     margin-top:4rem ;
 `
 
+const RightsContainer = styled.div`
+    font-size:0.8rem;
+    @media (max-width: 500px) {
+        text-align:center;
+        font-size:0.rem;
+        padding 0.2rem;
+    }
+`
+
 const InnerContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left:4rem;
-    margin-right:4rem;
+   
+    @media (max-width: 500px) {
+        margin-left:0;
+        margin-right0;
+    }
 `
 
 const Image = styled.img`
     height: 3.825rem;
     cursor: pointer;
     object-fit:contain;
-    @media (max-width: 424px) {
-        height: 3rem;
+    @media (max-width: 500px) {
+        height: 2.6rem;
     }
 `
 

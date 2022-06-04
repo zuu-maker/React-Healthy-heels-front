@@ -2,16 +2,21 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import Product from './Product'
 
-function Row({title,products}) {
+function Row({id,title,products}) {
+
+  const [newProducts, setNewProducts] = React.useState()
+
+  React.useEffect(() => {
+    const result = products.filter(product => product.id !== id);
+    setNewProducts(result)
+  },[products, id])
+
     return (
         <Container>
             <Heading>{title}</Heading>
             <InnerContainer>
-              {products.map(product => <Product key={product.id} id={product.id} data={product.data}/>)}
-                    {/* {JSON.stringify(products)}
-                    <Product/>
-                    <Product/>
-                    {isHome && <Product/> }   */}
+            
+              {newProducts?.map(product => <Product key={product.id} id={product.id} data={product.data}/>)}
             </InnerContainer>
         </Container>
     )
@@ -23,29 +28,16 @@ const Container = styled.div`
      justify-content: center;
      align-items: center;
      width: 100%; 
-     /* margin-top: 36px; */
-     /* margin-left: 100px; */
-     /* margin-right: 100px; */
-     /* max-width: 1366px; */
 `
 
 const InnerContainer = styled.div`
-    /* text-align :center ; */
    display: flex;
    justify-content:center;
    align-items:center;
-    /* align-items: center;
-    justify-content: center; */
-    /* max-width: 1366px; */
-    /* width: 100%; */
     margin-top: 16px;
     @media (max-width: 424px) {
         flex-direction: column;
     }
-    /* height: 100vh; */
-    /* margin-bottom: 0px; */
-    /* padding-left: 50px; */
-    /* padding: 40px; */
 `
 
 const myAnim = keyframes`
@@ -83,8 +75,9 @@ const Heading = styled.h6`
     color: #727375;
     animation: ${myAnim} 2s linear 0s infinite normal none;
     overflow-x:hidden;
+    @media (max-width: 600px) {
+      font-size: 1.4rem;
+  }
 `
-
-
 
 export default Row

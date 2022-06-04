@@ -21,9 +21,17 @@ function Slider() {
 
     return (
         <Container>
-            <Arrow pointer="left"   onClick={() => handleClick("left")}>
-                <KeyboardArrowLeftIcon disable={slideIndex === 0} fontSize="large"/>
+           { slideIndex === 0 ?
+           (
+            <Arrow pointer="left">
+                <KeyboardArrowLeftIcon fontSize="large"/>
             </Arrow>
+           ):
+           (
+            <Arrow pointer="left"   onClick={() => handleClick("left")}>
+            <KeyboardArrowLeftIcon  fontSize="large"/>
+            </Arrow>
+           )} 
             <Wrapper slideIndex={slideIndex}>
                 {slides.map((item,i) => 
                     <Slide key={i} bg={item.bg}>
@@ -38,15 +46,22 @@ function Slider() {
                     </Slide>   
                 )}             
             </Wrapper>
-            <Arrow pointer="right"  disabled={slideIndex === 2} onClick={() => handleClick("right")} >
+            {slideIndex === 2 ?
+            (
+                <Arrow pointer="right">
                 <KeyboardArrowRightIcon fontSize="large"/>
-            </Arrow>      
+                </Arrow>  
+            ):(
+                <Arrow pointer="right" onClick={() => handleClick("right")} >
+                <KeyboardArrowRightIcon fontSize="large"/>
+                </Arrow> 
+            )}
+               
         </Container>
     )
 }
 
 const Container = styled.div`
-/* max-width: 1366px; */
     width: 100%;
     height: 92vh;
     display: flex;
@@ -58,7 +73,6 @@ const Arrow = styled.div`
     width: 50px;
     height: 50px;
     cursor: pointer;
-    /* padding: 5px; */
     opacity: 0.68;
     background-color:#ffffff;
     border-radius: 50%;
@@ -78,9 +92,6 @@ const Arrow = styled.div`
 const Wrapper = styled.div`
 display: flex;
 height: 100%;
-/* @media (min-width: 1365px) {
-    transform: translateX(${props => props.slideIndex * -1366}px);
-  } */
 transform: translateX(${props => props.slideIndex * -100}vw);
 transition: all 1800ms ease;
 `
@@ -135,6 +146,7 @@ const Button = styled.button`
  padding: 12px;
  font-size: 20px;
  border-radius: 20px;
+ border:1px solid #00000;
  background-color:transparent;
  cursor: pointer;
 `

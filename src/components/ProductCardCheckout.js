@@ -56,7 +56,6 @@ function ProductCardCheckout({p}) {
   },[p])
 
   const handleCount = (e) => {
-    // alert("from event ==> " + e.target.value)
     let _count = e.target.value < 1 ? 1 : e.target.value;
     
     let quantity;
@@ -66,14 +65,11 @@ function ProductCardCheckout({p}) {
           quantity = s.data.quan - s.data.sold;
         }
       })
-    // alert("quantity is ==> " + quantity)
 
     if(_count > quantity) {
-      // setCount(quantity)
       alert(`max quantity is ${quantity}`)
     }else{
       setCount(_count)
-      // alert(_count);
 
       let cart = [];
 
@@ -99,11 +95,8 @@ function ProductCardCheckout({p}) {
   }
 
   const handleSize = (e) => {
-    // alert("from event ==> " + e.target.value)
     setSize(e.target.value);
     let _size = e.target.value
-      // alert(_count);
-
       let cart = [];
 
       if(typeof window !== "undefined") {
@@ -127,10 +120,7 @@ function ProductCardCheckout({p}) {
 
   return (
     <TableBody>
-      {/* {JSON.stringify(sizes[0])} */}
             <TableRow
-            //   key={row.name}
-            //   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell >
                   <div style={{width:"100px", height:"auto"}} >
@@ -142,25 +132,26 @@ function ProductCardCheckout({p}) {
                   </div>  
               </TableCell>
               <TableCell>{p.title}</TableCell>
-              <TableCell>K{parseInt(p.price).toFixed(2)}</TableCell>
               <TableCell>
-             
-            <FormControl variant="standard" fullWidth>
-            {/* <InputLabel id="demo-simple-select-label">size</InputLabel> */}
-            <Select
-                value={size}
-                onChange={handleSize}
-            > 
-              {
-              // eslint-disable-next-line 
-              sizes.map(i => {
-                if(i.data.quan - i.data.sold > 0){
-                  return <MenuItem value={i.data.size}>{i.data.size}</MenuItem>
-                }
-              })}
-            </Select>
-            </FormControl>
+                <FormControl variant="standard" fullWidth>
+                  <Select
+                    value={size}
+                    color="success"
+                    label="Size"
+                    onChange={handleSize}
+                  > 
+                  {
+                  // eslint-disable-next-line 
+                  sizes.map((i,index) => {
+                    if(i.data.quan - i.data.sold > 0){
+                      return <MenuItem key={index} value={i.data.size}>{i.data.size}</MenuItem>
+                    }
+                  })}
+                  </Select>
+                </FormControl>
               </TableCell>
+              <TableCell>
+              K{parseInt(p.price).toFixed(2)}</TableCell>
               <TableCell>
               <TextField sx={{ width:"2.4rem"}} color="success" type="number" value={count} onChange={handleCount} variant="standard" />
                 

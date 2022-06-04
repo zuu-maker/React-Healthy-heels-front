@@ -8,17 +8,12 @@ import { useHistory } from "react-router-dom";
 function Product({id,data}) {
 
     const {images, slug} = data;
-    let history = useHistory();
-    // const [color,setColor] = useState(false);
+    const history = useHistory();
 
     return (
     <Container >
-        {/* {JSON.stringify(data)} */}
-        <InnerContainer>
-            <Image src={images[0].url} onClick={() => history.push("/product/"+slug)} />
-            {/* <Icon onClick={() => setColor(color)}>
-               <FavoriteIcon className={color ? "heartColorPress" : "heartColor" }  />
-            </Icon> */}
+        <InnerContainer onClick={() => history.push("/product/"+slug)}>
+            <Image src={images[0].url}  />
         </InnerContainer>
         <Info 
             id={id}
@@ -31,9 +26,6 @@ function Product({id,data}) {
 export default Product
 
 const Container = styled.div`
-    /* border: 0.5px solid lightgray; */
-    /* max-width:200px; */
-    /* border-radius: 5px ; */
     &:hover {
         transform: scale(1.08);
         transition: all 0.7s 0.2s ease-in-out;
@@ -51,43 +43,28 @@ const Container = styled.div`
         width: 246px;
        
     }
-    @media (max-width: 600px) {
-        width: 84%;
-    }
-    @media (min-width: 425px) {
+    @media (min-width: 600px) {
         &:hover {
             transform: scale(1.08);
             transition: all 0.7s 0.2s ease-in-out;
         }
     }
-    /* height:300px ; */
 `
 
-// const Info = styled.div`
-
-// `
-
 const InnerContainer = styled.div`
-
     height: 100%;
     position: relative;
 `
 
-// const Icon = styled.div`
-//     top: 6px;
-//     right: 8px;
-//     position: absolute;
-// `
-
-
-
 const Image = styled.img`
     width: 100%;
-    
     height: 280px;
-    /* border-radius: 5px 5px 0 0; */
     cursor: pointer;
     object-fit:cover;
+    @media (max-width: 915px) {
+        height: 260px;
+       
+    }
 `
 
 

@@ -20,7 +20,7 @@ function OrderProduct({product, status}) {
             {product.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-            {product.description}
+            {product.description.substring(0,100) }
         </Typography>
     
             {status === "Not Processed" && (

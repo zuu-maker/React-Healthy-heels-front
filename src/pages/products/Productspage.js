@@ -150,31 +150,26 @@ function Productspage() {
                 <Sidebar
                 option={option}
                 setOption={setOption}
-                // price={price}
-                // setPrice={setPrice}
-                // ok={ok}
-                // setOk={setOk}
                 />
             </Left>
             <Right>
                 <HeadingRight>
-                    All Products
+                 {text && products.length > 0 ? "Results" : "All Products"}   
                 </HeadingRight>
-                {/* {productsCount} */}
-                {/* columns={{ xs: 1, sm: 8, md: 12 }} */}
-                {/* sm={6} md={4} */}
                {loading ?<Loading><CircularProgress color="success" /></Loading>  : (
                    <>
-                     <Grid sx={{marginTop:'0.7rem'}}  container rowSpacing={1} columnSpacing={{sm:2, md:2, lg:4}}>
-                   {products.map((product) => (
-                       <div key={product.id}>
-                           <Grid  item xs={12} sm={6} md={4} lg={3} key={product.id}>
-                           
-                           {/* <AdminProductCard item={product} /> */}
-                           <Product key={product} id={product.id} data={product.data}/>
-                       </Grid>
-                       </div>
-                   ))}
+                     <Grid sx={{marginTop:'0.7rem' }}justifyContent="center" alignItems="center"  container rowSpacing={1} columnSpacing={{sm:2, md:2, lg:4}}>
+                        
+                        
+                        {
+                        
+                        products.map((product) => (
+                            <div key={product.id}>
+                                <Grid  item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                                    <Product key={product} id={product.id} data={product.data}/>
+                                </Grid>
+                            </div>
+                    ))}
                </Grid>
               {showPaginate && 
               <Paginate>
@@ -207,11 +202,8 @@ const Container = styled.div`
     margin-top: 4.5rem;
     margin-bottom: 1rem;
     min-height: 900px;
-    @media (max-width: 424px) {
+    @media (max-width: 500px) {
         flex-direction: column;
-        /* height: 66%;
-        margin-bottom:-8rem ;
-        margin-top:2rem ; */
     }
 `
 
@@ -222,47 +214,37 @@ const Paginate = styled.div`
 
 const Left = styled.div`
     flex: 0.06;
-    height: 100vh;
-    
 `
 
 const Loading = styled.div`
     text-align: center;
     width:100%;
-    height:100%;
+    height:70vh;
     margin-top:20%;
 `
 
 const Right = styled.div`
     flex: 0.94;
     margin-left:1rem;
+    text-align:center;
     @media (max-width: 424px) {
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 3rem;
         width: 100%;
         flex: 1;
-        /* flex-direction: column; */
-        /* height: 66%;
-        margin-bottom:-8rem ;
-        margin-top:2rem ; */
+        
     }
 `
 
-const HeadingRight = styled.h1`
-    font-size: 63;
-    /* text-transform:uppercase; */
+const HeadingRight = styled.h3`
+    font-size: 2rem;
     color: #727375;
     margin-top: 20px;
-    // margin-left: 36px;
-    @media (max-width: 424px) {
-        font-size: 46px;
+    @media (max-width: 600px) {
+        font-size: 1.6rem;
         margin-left: 1rem;
         margin-bottom: 1rem;
-        /* flex-direction: column; */
-        /* height: 66%;
-        margin-bottom:-8rem ;
-        margin-top:2rem ; */
     }
 `
 

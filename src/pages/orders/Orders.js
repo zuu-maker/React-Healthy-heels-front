@@ -11,17 +11,23 @@ function Orders() {
 
     let { user} = useSelector((state) =>({...state}));
 
-    const [orders, setOrders] = React.useState([])
+    const [orders, setOrders] = React.useState([])  
 
     React.useEffect(() => {
         if(user && user.token){
-            db.collection("Order").where("orderedBy","==",user.email)
-            .onSnapshot((snap) => {
-                setOrders(snap.docs.map(doc => ({id:doc.id, data:doc.data()})))
-            })            
+            db.collection("Users")
+            .doc(user.id)
+            .collection("Orders")
+            .orderBy("lastUpdatedAt","desc")
+            .get()
+            .then((doc) => {
+                setOrders(doc.docs.map(doc => ({id:doc.id, data:doc.data()})))
+            })
+                
         }
         //eslint-disable-next-line
     },[user])
+
 
   return (
     <div style={{height:"100%"}}>
@@ -40,29 +46,20 @@ function Orders() {
 
 export default Orders
 
-const InnerContainer = styled.div`
-    // background-color:red;
-
-    width:80%;
-    height:100%;
-`
-
 const Container = styled.div`
     margin-right: auto;
     margin-left: auto;
     max-width: 1366px;
-    // min-height: 68vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items:center;
     margin-top: 88px;
-    @media (max-width: 424px) {
-        // flex-direction: column;
-        /* height: 66%;
-        margin-bottom:-8rem ;
-        margin-top:2rem ; */
-    }
+`
+
+const InnerContainer = styled.div`
+    width:80%;
+    height:100%;
 `
 
 const LinkBack = styled.h4`

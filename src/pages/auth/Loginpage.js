@@ -12,29 +12,30 @@ const useStyles = makeStyles({
         height: "100vh",
         backgroundColor:"#F0EAD6",
     },
-    outerContainer:{
-
-    },
     innerContainer: {
         textAlign: "center",
-        // borderRadius:"10px",
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+        padding:'1rem',
         height: "86vh !important",
         width:"32%",
         borderRadius: "16px",
-        // marginTop:"10.2%",
         margin:"auto",
-        // backgroundColor:"red",
-        // border: "1px solid grey",
         boxShadow:"1px 3px 13px 0px rgba(193,185,185,0.72)",
         '@media (max-width: 780px)' : {
-            width:"82%",
-            height: "56vh !important",
+            width:"max-content",
+            height: "50vh !important",
           }
     },
     input:{
         width:"298px",
         borderRadius:"10px !important",
         marginTop:"20px !important",
+        '@media (max-width: 780px)' : {
+            width:"220px"
+          }
     },
     button:{
         width:"298px",
@@ -44,38 +45,34 @@ const useStyles = makeStyles({
         backgroundColor:"#0e5d3b  !important",
         color:"#ffffff !important",
         fontSize:"16px !important",
-        padding: "8px 0 !important"
-    },
-    infoContainer: {
-        // width: "298px",
+        padding: "8px 0 !important",
+        '@media (max-width: 780px)' : {
+            width:"220px"
+          }
     },
     info:{
         textAlign:"left",
         color: "#0e5d3b",
         marginTop: "4px !important",
     },
-    link:{
-       
-    },
-    cover:{
-        width:"50vw",
-        height: "100vh",
-        backgroundColor:"black",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundImage: `url("https://images.pexels.com/photos/927451/pexels-photo-927451.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`
-    },
-    topCover:{
-        width:"100%",
-        height: "100%",
-        backgroundColor:"black",
-        opacity:0.37,
-    },
     heading:{
         marginTop:"2.8rem",
         marginBottom:"2rem",
-        color:"#0e5d3b "
+        color:"#0e5d3b ",
+        '@media (max-width: 780px)' : {
+            fontSize:'2rem'
+          }
+      },
+      form:{
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center'
+      },
+    error:{
+        fontSize:'1rem',
+        '@media (max-width: 780px)' : {
+            fontSize:'0.7rem'
+          }
     }
 })
 
@@ -88,6 +85,12 @@ function Loginpage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    React.useEffect(() => {
+        if(error) setError("");
+        // eslint-disable-next-line
+    },[])
 
     const roleBasedRedirect = (userData) => {
         let intended = history.location.state;
@@ -115,14 +118,14 @@ function Loginpage() {
             const {user} = result;
             const idTokenResult = await user.getIdTokenResult();
 
+            if(error) setError("");
+
             db.collection("Users").where("email", "==", user.email)
             .get()
             .then((querySnapshot) => {
                 let userData;
 
                 querySnapshot.forEach((doc) => {
-                    // doc.data() is never undefined for query doc snapshots
-                    // console.log(doc.id, " => ", doc.data());
                     userData = {
                         data:doc.data()
                     }
@@ -140,22 +143,17 @@ function Loginpage() {
                 });
 
                 roleBasedRedirect(userData)
-                // alert("yeah");
+               
             })
             .catch((err) => {
                     console.log(err);
             })
 
-            
-            // history.push("/");
-
         }catch(error){
             console.log(error);
+            setError(error.message)
+
         }
-
-        // console.log(user);
-
-        // history.push("/")
 
         dispatch({
             type:"SET_LOADER",
@@ -181,17 +179,13 @@ function Loginpage() {
         <>
         {loader && <LinearProgress color="success" />}
             <div className={classes.container}>
-            
-            {/* {password} */}
-            {/* <div className={classes.cover}>
-                <div className={classes.topCover}></div>
-            </div> */}
                 
                 <div className={classes.innerContainer}>
 
-                    <FormControl>
+                    <FormControl className={classes.form}>
                     <h1 className={classes.heading}>Login</h1>
                     <TextField
+                    className={classes.input}
                     autoFocus
                     label="Email"
                     hiddenLabel
@@ -219,14 +213,15 @@ function Loginpage() {
                     onClick={handleSubimt}
                     className={classes.button}
                     type="submit"
-                    variant="contained">Login</Button>
+                    variant="contained">Login </Button>
+                        {error && <Typography variant="span" color="error" className={classes.error} >{error}</Typography>}
                     
                         <Typography  className={classes.info} variant="p">
-                            dont have an account? <Linker className={classes.link} onClick={signUp} >click here</Linker>
+                            Don't have an account? <Linker className={classes.link} onClick={signUp} >click here</Linker>
                         </Typography>
-                        <Typography className={classes.info} variant="p">
+                        {/* <Typography className={classes.info} variant="p">
                             <span className={classes.link}>forgot passord</span>  
-                        </Typography>
+                        </Typography> */}
                     
                     </FormControl>
                 </div>

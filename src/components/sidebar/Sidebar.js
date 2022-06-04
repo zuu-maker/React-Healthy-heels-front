@@ -19,9 +19,7 @@ function Sidebar({option, setOption}) {
 
     const handleChange = (e) => {
         const { value } = e.target
-        // alert(value)
-        setOption(value)
-        
+        setOption(value)  
     }
 
     return (
@@ -29,7 +27,7 @@ function Sidebar({option, setOption}) {
            
              
             <InnerContainer >
-            <FormControl color="success" sx={{ m: 1, minWidth: 140 }} size="small">
+            <FormControl fullWidth color="success" sx={{ m: 1, minWidth: 140,maxWidth:'400px', }} size="small">
                 <InputLabel >Sort By</InputLabel>
                 <Select
                    
@@ -54,26 +52,11 @@ const Container = styled.div`
     margin-right:1rem;
 `
 
-
-
-
-
 const InnerContainer = styled.div`
-        // display: flex;
-        // flex-direction: column;
-        /* justify-content: center; */
         align-items: center;
-        margin-top: 4.2rem; 
-        // margin-left: 20px;
-        /* @media (max-width: 424px) {
+        margin-top: 4.2rem;
+        @media (max-width: 500px) {
             flex-direction: row;
-        } */
+            margin-top: 1.5rem; 
+        } 
 `
-
-// const Heading = styled.h1`
-//     font-size: 63;
-//     /* text-transform:uppercase; */
-//     color: #727375;
-//     margin-top: 20px;
-//     margin-left:16.5px;
-// `

@@ -9,6 +9,7 @@ import AdminCategories from '../../components/admin/AdminCategories';
 const useStyles = makeStyles({
     innerContainer:{
         marginTop:"4rem !important",
+        
         // paddingLeft:"0.5rem",
         // paddingRight:"0.5rem",
         // borderRight:"solid 1.5px whitesmoke",

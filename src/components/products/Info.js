@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { Tooltip } from '@mui/material';
 
@@ -10,36 +9,74 @@ function Info({id,data}) {
     const {title, sold, quantity, price} = data;
     const inStock = quantity - sold;
     let dispatch = useDispatch();
-    const [tooltip, setTooltip] = React.useState(false);
+    const [tooltip, setTooltip] = React.useState("Add to Cart");
+
+    function containsObject(list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if (list[i].id === id) {
+                return true;
+            }
+        }
+    
+        return false;
+    }
+
+    React.useEffect(() => {
+        if(sold === quantity){
+            setTooltip("Sold Out");
+        }
+        // eslint-disable-next-line 
+    },[])
+
+    React.useEffect(() => {
+
+        if(typeof window !== "undefined"){
+            let cart = [];
+            if(localStorage.getItem("cart")){
+                cart = JSON.parse(localStorage.getItem("cart"));
+            }
+
+            if(containsObject(cart)) setTooltip("Added");
+        }
+        // eslint-disable-next-line 
+    },[])
+
 
     const handleAddToCart = () => {
         let cart = [];
+        if(sold === quantity){
+            return;
+        } 
+
         if(typeof window !== "undefined"){
             if(localStorage.getItem("cart")){
                 cart = JSON.parse(localStorage.getItem("cart"));
             }
 
-            cart.push({
-                id:id,
-                ...data,
-                count:1,
-                size:""
-            });
+            if(!containsObject(cart)){
+                cart.push({
+                    id:id,
+                    ...data,
+                    count:1,
+                    size:""
+                });
 
-            let unique = _.uniqWith(cart,_.isEqual);
-
-            localStorage.setItem("cart",JSON.stringify(unique));
+                localStorage.setItem("cart",JSON.stringify(cart));
 
             dispatch({
                 type:"ADD_TO_CART",
-                payload: unique,
+                payload: cart,
             })
 
             dispatch({
                 type:"SET_DRAWER",
                 payload:true
               })
-            setTooltip(true);
+            setTooltip("Added");
+
+            }
+            
         }
     };
 
@@ -47,8 +84,9 @@ function Info({id,data}) {
         <Container>
             <Center>
                 <Title>{title}</Title>
-                <Tooltip title={tooltip ? "Added" : "Add to Cart"} >
-                <AddShoppingCartIcon onClick={handleAddToCart} style={{color: "#727375", cursor: "pointer"}} />
+                <Tooltip title={tooltip} >
+                <AddShoppingCartIcon
+                onClick={handleAddToCart} style={{color: "#727375", cursor: "pointer"}} />
                 </Tooltip>
             </Center>
             <InnerContainer>
@@ -59,10 +97,6 @@ function Info({id,data}) {
                 {sold === quantity ? <Stock>Sold Out</Stock> : <Stock>{inStock+" In Stock"}</Stock>} 
                 
             </InnerContainer>
-            {/* <ButtonContainer>
-            <Button style={{backgroundColor:"#E7E6E6", color:"#727375"}} variant="conatained">Add To Cart</Button>
-            <Button style={{backgroundColor:"#727375"}} variant="contained">Buy Now</Button>
-            </ButtonContainer> */}
         </Container>
     )
 }
@@ -70,17 +104,15 @@ function Info({id,data}) {
 export default Info
 
 const Container = styled.div`
-    
     width:96%;
-    
     padding: 8px;
 `
 
 const Center = styled.div`
-display: flex;
-justify-content:space-between;
-margin-top:0.4rem;
-margin-bottom:0.4rem;
+    display: flex;
+    justify-content:space-between;
+    margin-top:0.4rem;
+    margin-bottom:0.4rem;
 `
 
 const Title = styled.h3`
@@ -89,7 +121,6 @@ const Title = styled.h3`
 `
 
 const Price = styled.p`
-
     font-size:1.25rem;
     font-weight: bold;
     color: #0e5d3b;

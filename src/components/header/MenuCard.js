@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, ListItemIcon, Menu, MenuItem } from '@mui/material';
+import { ListItemIcon, Menu, MenuItem } from '@mui/material';
 import { Logout} from '@mui/icons-material';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -15,8 +15,64 @@ const menuItems = [
   id:1,
   path:"/products",
   title:"Shop All",
-  icon:(<LocalOfferIcon />)
+  icon:(<LocalOfferIcon />),
+  all:true,
+  user:"subscriber"
   },
+  {
+    id:2,
+    path:"/admin/dashboard",
+    title:"Dashboard",
+    icon:(<DashboardIcon />),
+    all:false,
+    user:"admin",
+    loggedIn:true,
+    },
+    {
+      id:3,
+      path:"/user/history",
+      title:"Orders",
+      icon:(<AccountBoxIcon />),
+      all:false,
+      user:"admin",
+      loggedIn:true,
+      },
+    {
+      id:4,
+      path:"/orders",
+      title:"Orders",
+      icon:(<AccountBoxIcon />),
+      all:false,
+      user:"subscriber",
+      loggedIn:true,
+      },
+      {
+        id:5,
+        path:"/cart",
+        title:"Cart",
+        icon:(<ShoppingCartIcon />),
+        all:true,
+        user:"subscriber",
+        loggedIn:false,
+        },
+        {
+          id:6,
+          path:"",
+          title:"Logout",
+          icon:(<Logout />),
+          all:false,
+          user:"subscriber",
+          loggedIn:true,
+          },
+          {
+            id:7,
+            path:"/login",
+            title:"Sign In",
+            icon:(<LoginIcon />),
+            all:false,
+            user:"subscriber",
+            loggedIn:false,
+            },
 ]
 
 function MenuCard({anchorEl, open, handleClose }) {
@@ -69,92 +125,65 @@ function MenuCard({anchorEl, open, handleClose }) {
         }}
         transformOrigin={{ horizontal: 'left', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-      >
-        {/* <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider /> */}
-
-        {menuItems.map((item) => (
-          <MenuItem key={item.id} onClick={() => history.push(item.path)}>
-          <ListItemIcon>
-            {item.icon}
-          </ListItemIcon>
-          {item.title}
-        </MenuItem>
-        ))}
-        
-        
-        {user && user.token && (
-          <>
-          {user && user.role === 'admin' ? 
-          (
-            <>
-              <MenuItem key={1} onClick={() => history.push("/admin/dashboard")}>
-                  <ListItemIcon>
-                      <DashboardIcon fontSize="small" />
+      >     
+       {/* eslint-disable-next-line */}
+        {menuItems.map((item) =>{
+          if(!item.all){
+            if((user && user.token) && item.loggedIn && item.title === "Logout"){
+              return(
+                  <MenuItem key={item.id} onClick={logout}>
+                    <ListItemIcon>
+                      {item.icon}
                     </ListItemIcon>
-                      Dashboard
-              </MenuItem>
-              <MenuItem key={2} onClick={() => history.push("/user/history")}>
+                    {item.title}
+                </MenuItem>
+              )
+            }else if((user && user.token) && item.loggedIn && item.user === "admin" && "admin" === user?.role){
+              return(
+                <MenuItem key={item.id} onClick={() => history.push(item.path)}>
                   <ListItemIcon>
-                      <AccountBoxIcon fontSize="small" />
+                    {item.icon}
                   </ListItemIcon>
-                    Orders
-              </MenuItem>
-            </>
-          )
-          :
-          (
-          <MenuItem key={2} onClick={() => history.push("/user/history")}>
-            <ListItemIcon>
-              <AccountBoxIcon fontSize="small" />
-            </ListItemIcon>
-            Orders
-          </MenuItem>
-          )}
-            <MenuItem key={3} onClick={() => history.push("/products")}>
-            <ListItemIcon>
-              <ShoppingCartIcon fontSize="small" />
-            </ListItemIcon>
-            Cart
-          </MenuItem>
-           <Divider />
-           {/* <MenuItem>
-             <ListItemIcon>
-               <Settings fontSize="small" />
-             </ListItemIcon>
-             Password Reset
-           </MenuItem>
-           <MenuItem onClick={() => history.push("/products")}>
-             <ListItemIcon>
-               <AccountBoxIcon fontSize="small" />
-             </ListItemIcon>
-             Account
-           </MenuItem> */}
-           <MenuItem key={4} onClick={logout}>
-             <ListItemIcon>
-               <Logout fontSize="small" />
-             </ListItemIcon>
-             Logout
-           </MenuItem>
-          </>
-          
-       
-      )} 
-      {!user && (
-        <MenuItem key={5} onClick={() => history.push("/login")}>
-        <ListItemIcon>
-          <LoginIcon fontSize="small" />
-        </ListItemIcon>
-        Sign In
-      </MenuItem>
-      )} 
+                  {item.title}
+               </MenuItem>
+              )
+            }else if((user && user.token) && item.loggedIn && item.user === "subscriber" && "subscriber" === user?.role){
+              return(
+                <MenuItem key={item.id} onClick={() => history.push(item.path)}>
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  {item.title}
+               </MenuItem>
+              )
+            }
+            else if(!user && !item.loggedIn){
+              return(
+                <MenuItem key={item.id} onClick={() => history.push(item.path)}>
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  {item.title}
+               </MenuItem>
+              )
+            }
+          }else{
+             return (
+              <MenuItem key={item.id} onClick={() => history.push(item.path)}>
+              <ListItemIcon>
+                {item.icon}
+              </ListItemIcon>
+              {item.title}
+            </MenuItem>
+            )
+          }
+
+         
+        })}
       </Menu>
   );
 }
 
 export default MenuCard;
+
+

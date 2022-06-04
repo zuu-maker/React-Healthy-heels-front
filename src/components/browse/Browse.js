@@ -20,10 +20,9 @@ function Browse() {
 
 const Container = styled.div`
 display: flex;
-/* padding: 20px; */
 justify-content: space-between;
 width: 100%;
-@media (max-width: 424px) {
+@media (max-width: 600px) {
         flex-direction: column;
     }
 `

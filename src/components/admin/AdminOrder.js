@@ -30,7 +30,7 @@ function AdminOrder({order}) {
     React.useEffect(() => {
 
         setStatus(order.data.orderStatus)
-        db.collection("Users").where("email","==",order.data.orderedBy)
+        db.collection("Users").where("id","==",order.data.orderedBy)
         .get()
         .then((res) => {
             setUser( res.docs[0].data() )
@@ -46,15 +46,24 @@ function AdminOrder({order}) {
         const { value } = e.target
 
         setStatus()
-        db.collection("Order").doc(order.id)
-        .update({orderStatus: value, lastUpdatedAt: firebase.firestore.FieldValue.serverTimestamp() })
+        db.collection("Users").doc(order.data.orderedBy).collection("Orders").doc(order.data.customerOrderId)
+        .update({orderStatus: value,lastUpdatedAt:firebase.firestore.FieldValue.serverTimestamp()})
         .then(() => {
-            setStatus(value)
+            db.collection("Order").doc(order.id)
+            .update({orderStatus: value, lastUpdatedAt: firebase.firestore.FieldValue.serverTimestamp() })
+            .then(() => {
+                setStatus(value)
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Error Updating")
+            })
         })
         .catch((err) => {
             console.log(err);
-            alert("Error Updating")
+            alert("error updating customer side")
         })
+        
     
       }
 
@@ -66,7 +75,7 @@ function AdminOrder({order}) {
         <TableCell component="th" scope="row">
         {order.id}
         </TableCell>
-        <TableCell align="right">{order.data.orderedBy}</TableCell>
+        <TableCell align="right">{user?.email}</TableCell>
         <TableCell align="right">{user.address?.city}</TableCell>
         <TableCell align="right">{user?.phone}</TableCell>
         <TableCell align="right">{user.address?.detailedAddress}</TableCell>

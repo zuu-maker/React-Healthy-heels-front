@@ -28,10 +28,12 @@ function Search() {
         <SearchContainer>
             <SearchIcon onClick={handleSubmit} className="mainColor" fontSize="medium" />  
             <Input
-             type="search" 
-             placeholder="Search" 
-             value={text}
-             onChange={handleChange}
+            //  type="search" 
+            style={{backgroundColor:'white'}}
+            type="text"
+            placeholder="Search" 
+            value={text}
+            onChange={handleChange}
              />
         </SearchContainer>
   )
@@ -49,7 +51,11 @@ const SearchContainer = styled.div`
     background-color:#ffffff;
     @media (max-width: 424px) {
         margin-left: 0px;
+        display:none;
     }
+    // @media (max-width: 424px) {
+    //    
+    // }
 `
 
 const Input = styled.input`

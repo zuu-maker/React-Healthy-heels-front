@@ -4,17 +4,25 @@ import styled from 'styled-components'
 
 function InfoContainer({size,setSize,sizes,data}) {
 
-    // const [size, setSize] = React.useState('');
+    const [disable, setDisable] = React.useState(false);
 
     const handleChange = (event) => {
         setSize(event.target.value);
     };
 
-    const { title, price} = data;
+    const { title, price, quantity, sold} = data;
+
+    React.useEffect(() => {
+        if(quantity - sold === 0){
+            setDisable(true)
+        }else{
+            setDisable(false)
+        }
+        // eslint-disable-next-line
+    },[quantity,sold ])
 
     return (
         <Container>
-            {/* <InnerContainer> */}
                 <div
                 style={{width: '100%', backgroundColor: 'whitesmoke'}}
                 >
@@ -22,7 +30,7 @@ function InfoContainer({size,setSize,sizes,data}) {
                 </div>
                 <Price>K{parseInt(price).toFixed(2)}</Price>
                 
-                <FormControl style={{marginTop:"1rem"}} fullWidth>
+                <FormControl disabled={disable} style={{marginTop:"1rem"}} fullWidth>
                     <InputLabel
                     color="success"
                     >Size</InputLabel>
@@ -43,7 +51,6 @@ function InfoContainer({size,setSize,sizes,data}) {
                    
                     </Select>
                 </FormControl>
-            {/* </InnerContainer> */}
         </Container>
     )
 }
@@ -51,41 +58,21 @@ function InfoContainer({size,setSize,sizes,data}) {
 export default InfoContainer
 
 const Container = styled.div`
-    /* box-shadow: 1.5px 1.5px 14px 0 rgba(0,0,0,.2); */
-    /* margin-top: 132px; */
-    /* height: 10rem; */
-    
-    /* width: 15rem; */
-    background-color: #ffffff;
-    
-    
+    background-color: #ffffff; 
 `
-
-// const InnerContainer = styled.div`
- /* margin-top: 28px; */
- /* margin-left: 16px; */
- /* margin-bottom: 28px; */
-// `
 
 const Name = styled.h2`
     color: #0E5D3B;
-    /* color: #727375; */
     font-weight: 600;
     font-size: 1.8rem;
-    /* font-family: 'Urbanist', sans-serif; */
 `
 
 const Price = styled.h3`
     font-style: italic;
-    /* color: #0E5D3B; */
     color: #727375;
     font-size: 1.6rem;
     font-weight: 400;
     margin-top: 0.5rem;
 `
-
-// const Color = styled.div`
-//     margin-top: 0.5rem;
-// `
 
 

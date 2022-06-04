@@ -19,13 +19,10 @@ function BrowseItem({title,image}) {
 
 const Container = styled.div`
 flex: 1;
-height: 54vh !important;
+height: 42vh !important;
 margin: 12px;
 position: relative
-/* @media (max-width: 424px) {
-    height: 26vh !important;
 
-    } */
 `
 
 const Image = styled.img`

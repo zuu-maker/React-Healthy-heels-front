@@ -16,51 +16,60 @@ const useStyles = makeStyles({
     },
     innerContainer: {
         textAlign: "center",
-        // marginTop:"2.8%",
-        margin:"auto",
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+        padding:'1rem',
         height: "86vh !important",
         width:"32%",
         borderRadius: "16px",
-        // marginTop:"10.2%"
-        // backgroundColor:"red",
-        // border: "1px solid grey",
+        margin:"auto",
         boxShadow:"1px 3px 13px 0px rgba(193,185,185,0.72)",
         '@media (max-width: 780px)' : {
-            width:"82%",
-            height: "56vh !important",
+            width:"max-content",
+            height: "50vh !important",
           }
     },
     input:{
         width:"298px",
         borderRadius:"10px !important",
         marginTop:"20px !important",
+        '@media (max-width: 780px)' : {
+            width:"220px"
+          }
     },
     button:{
         width:"298px",
         marginTop:"1.8rem !important",
-        marginBottom:"2.2rem !important",
+        marginBottom:"0.4rem !important",
         borderRadius:"10px !important",
-        backgroundColor:"#0e5d3b !important",
+        backgroundColor:"#0e5d3b  !important",
         color:"#ffffff !important",
         fontSize:"16px !important",
-        padding: "8px 0 !important"
-    },
-    infoContainer: {
-        // width: "298px",
-    },
-    info:{
-        textAlign:"left",
-        color: "#3F51B5",
-        marginTop: "4px !important",
-    },
-    checkbox:{
-        textAlign:"left",
-        marginTop:"12px"
+        padding: "8px 0 !important",
+        '@media (max-width: 780px)' : {
+            width:"220px"
+          }
     },
     heading:{
         marginTop:"3rem",
         marginBottom:"1.4rem",
-        color:"#0e5d3b "
+        color:"#0e5d3b",
+        '@media (max-width: 780px)' : {
+            fontSize:'2rem'
+          }
+    },
+    form:{
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center'
+      },
+    error:{
+        fontSize:'1rem',
+        '@media (max-width: 780px)' : {
+            fontSize:'0.7rem'
+          }
     }
 })
 
@@ -182,7 +191,7 @@ function RegisterFinishpage() {
       {loader && <LinearProgress color="success" />}
         <div className={classes.container}>
           <div className={classes.innerContainer}>
-            <FormControl>
+            <FormControl className={classes.form} >
             <h1 className={classes.heading}>Registration</h1>
             <TextField
             autoFocus
@@ -220,7 +229,7 @@ function RegisterFinishpage() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             />
-            {showError && <Typography color="error" variant="caption"  >
+            {showError && <Typography color="error" variant="caption" className={classes.error}  >
                 {error}
             </Typography>}
             <Button 

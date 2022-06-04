@@ -76,7 +76,6 @@ function ProductUpdateForm({slug}) {
                 setId(doc.id)
                 setValues({...values,...doc.data()})
             })
-            
         });
        
         return () => unsubscribe();
@@ -115,7 +114,7 @@ function ProductUpdateForm({slug}) {
     },[])
 
     const handleChange = (e) => {
-        setValues({...values, [e.target.name]: e.target.value});
+            setValues({...values, [e.target.name]: e.target.value});
     }
 
     const handleSubmit = (e) => {

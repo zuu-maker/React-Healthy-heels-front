@@ -22,9 +22,31 @@ function Productpage({match}) {
 
     let {slug} = params
 
-    const getNewArrivals = () => {
-        // setLoading(true)
-        db.collection("Product").orderBy("createdAt","desc").limit(4)
+    React.useEffect(() => {
+        db.collection("Product")
+        .where("slug","==",slug)
+        .get()
+        .then((querySnapshot) => {
+            setProduct(querySnapshot.docs[0].data()) 
+            setId(querySnapshot.docs[0].id)
+            db.collection("Product").doc(querySnapshot.docs[0].id).collection("sizes")
+            .orderBy("size")
+            .get()
+            .then((snap) => {
+                setSizes(
+                    snap.docs.map((doc) => ({
+                        data: doc.data()
+                    }))
+                )
+            })
+        })
+        // eslint-disable-next-line 
+    },[slug])
+
+    const getRelated = (item) => {
+        if(item && item.category && item.category.length > 0)
+        db.collection("Product").where("category","==",item?.category)
+       .limit(4)
         .onSnapshot((snapshot) => {
             setRelatedProducts(
             snapshot.docs.map(doc => (
@@ -33,42 +55,13 @@ function Productpage({match}) {
                 data: doc.data()
             }
             )))
-            // setLoading(false)
         })
       }
 
       React.useEffect(() => {
-        getNewArrivals();
-      },[])
-   
-        React.useEffect(() => {
-            db.collection("Product")
-            .where("slug","==",slug)
-            .get()
-            .then((querySnapshot) => {
-                setProduct(querySnapshot.docs[0].data()) 
-                setId(querySnapshot.docs[0].id)
-                db.collection("Product").doc(querySnapshot.docs[0].id).collection("sizes")
-                .orderBy("size")
-                .get()
-                .then((snap) => {
-                    setSizes(
-                        snap.docs.map((doc) => ({
-                            data: doc.data()
-                        }))
-                    )
-                })
-                
-                console.log(product);
-            })
-            // eslint-disable-next-line 
-        },[])
-
-    // React.useEffect(() => {
-
-        
-    //      // eslint-disable-next-line
-    // },[])
+          
+          if(product) getRelated(product);  
+      },[product])
 
     return (
         <Container>
@@ -106,8 +99,9 @@ function Productpage({match}) {
                 </Right>
             </InnerContainer>
             <Row
-                    products={relatedProducts}
-                    title="Related Products"
+                id={id}
+                products={relatedProducts}
+                title="Related Products"
                 />
             <Footer/>
         </Container>
@@ -118,8 +112,6 @@ export default Productpage
 
 const Container = styled.div`
     width: 100%;
-
-    /* height: 100vh; */
 `
 
 const InnerContainer = styled.div`
@@ -130,7 +122,7 @@ const InnerContainer = styled.div`
     margin-top:5rem;
     margin-bottom:1rem;
     border-bottom: 1px solid #727375;
-    @media (max-width: 424px) {
+    @media (max-width: 600px) {
         flex-direction: column;
     }
 `
@@ -138,27 +130,17 @@ const RightContainer = styled.div`
      box-shadow: 1.5px 1.5px 14px 0 rgba(0,0,0,.2);
      padding: 1rem;
      width: 24rem;
-     @media (max-width: 424px) {
+     @media (max-width: 600px) {
         width: 85%;
     }
 `
 
 const Left = styled.div`
-    /* background-color: red; */
     flex: 0.55;
-    /* height: 82vh; */
-    /* width: 100%; */
-    /* margin-top: 64px ; */
-    /* margin-top: 4.2rem ; */
-    /* padding: 3rem; */
 `
 
 const CarouselContainer = styled.div`
     margin-Left: 0.5rem;
-    /* height: 720px !important; */
-    /* display:flex;
-    align-items: center;
-    justify-content: center; */
 `
 
 const Right = styled.div`
@@ -167,7 +149,4 @@ const Right = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    /* height: 100vh; */
-    
-   /* margin-Right:7rem; */
 `

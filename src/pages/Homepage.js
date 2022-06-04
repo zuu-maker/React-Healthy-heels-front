@@ -58,7 +58,6 @@ function Homepage() {
           <Home>
               <Slider/>
               <Browse/>
-              {/* {JSON.stringify(newArrivals)} */}
               {loading ?<Loading><CircularProgress color="success" /></Loading>  :
               (
                 <>
@@ -88,7 +87,6 @@ const Home = styled.div`
     margin-right: auto;
     margin-left: auto;
     max-width: 1366px;
-    // background-color:#f0f5f1;
     padding-bottom: 2rem;
 `
 
@@ -98,14 +96,5 @@ const Loading = styled.div`
     margin-bottom:16%;
     height: 40%;
 `
-//   width: 100vw;
-//   /* max-width: 1366px; */
-//   justify-content: center;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-
-
-
 
 export default Homepage

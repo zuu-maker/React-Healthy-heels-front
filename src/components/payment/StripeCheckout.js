@@ -7,7 +7,7 @@ import axios from "axios";
 import "./payment.css"
 import { useHistory } from "react-router-dom";
 
-function StripeCheckout({saveAddress}) {
+function StripeCheckout({total,saveAddress}) {
 
     let dispatch = useDispatch()
     const { user } = useSelector(state => ({...state}));
@@ -24,12 +24,19 @@ function StripeCheckout({saveAddress}) {
 
     useEffect(() => {
          // Create PaymentIntent as soon as the page loads
-        axios.post(`${process.env.REACT_APP_API}/create-payment-intent`,{})
-        .then((res) => {
-            setClientSecret(res.data.clientSecret)
-            console.log(res.data.clientSecret);
-        })
-    },[])
+         if(total){
+            axios.post(`${process.env.REACT_APP_API}/create-payment-intent`,{
+              total
+            })
+            .then((res) => {
+                setClientSecret(res.data.clientSecret)
+                
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+         }      
+    },[total])
 
     const handleSubmit = async (e) => {
 
@@ -75,14 +82,23 @@ function StripeCheckout({saveAddress}) {
                 })
               })
 
-                  db.collection("Order").add({
+                  db.collection("Users").doc(user.id).collection("Orders").add({
                     products:querySnapshot.docs[0].data().cart,
                     paymentIntent:payload.paymentIntent,
                     orderStatus: "Not Processed",
-                    orderedBy:user.email,
                     createdAt:firebase.firestore.FieldValue.serverTimestamp(),
                     lastUpdatedAt:firebase.firestore.FieldValue.serverTimestamp()
-                  }).then(() => {
+                  }).then((res) => {
+                    // res.update({customerOrderId:})
+                    db.collection("Order").add({
+                    customerOrderId:res.id,
+                    products:querySnapshot.docs[0].data().cart,
+                    paymentIntent:payload.paymentIntent,
+                    orderStatus: "Not Processed",
+                    orderedBy:user.id,
+                    createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+                    lastUpdatedAt:firebase.firestore.FieldValue.serverTimestamp()
+                    })
                     if(typeof window !== "undefined") localStorage.removeItem("cart")
                     dispatch({
                       type:"ADD_TO_CART",
