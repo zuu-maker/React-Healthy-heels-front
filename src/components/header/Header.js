@@ -24,7 +24,7 @@ const useStyles = makeStyles({
         color:"#0e5d3b",
         alignItems:'center',
         justifyContent:'center',
-        '@media (max-width: 500px)' : {
+        '@media (max-width: 600px)' : {
             width:'3.5rem',
             fontSize:12,
           }
@@ -36,15 +36,23 @@ const useStyles = makeStyles({
     },
     search:{
         display:'none',
-        fontSize:32,
+        fontSize:'1.75rem',
         color: '#0e5d3b',
         cursor: 'pointer',
-        '@media (max-width: 500px)' : {
+        '@media (max-width: 600px)' : {
             display:'block'
           }
     },
     input:{
         padding:'0.2rem',
+    },
+    icon:{
+        fontSize:'1.7rem',
+        color:'#0e5d3b',
+        cursor:'pointer',
+        '@media (max-width: 600px)' : {
+            fontSize:'1.4rem',
+          }
     }
 })
 
@@ -167,7 +175,7 @@ function Header() {
                             (
                                 <Badge color="success" badgeContent={cart?.length} max={9}>
                                     <Tooltip title="Your Cart">                               
-                                        <ShoppingCartIcon className="mainColor" fontSize="large" />  
+                                        <ShoppingCartIcon className={classes.cart} />  
                                     </Tooltip>  
                                 </Badge>
                             )
@@ -189,7 +197,7 @@ function Header() {
                             {"hey, \n" + user.name.split(' ')[0] }
                         </Avatar> :(
                             <LogIn onClick={() => history.push("/login")}>
-                                <LoginIcon className="mainColor" />
+                                <LoginIcon className={classes.icon}  />
                                 <Text >Sign In</Text>
                             </LogIn>
                             
