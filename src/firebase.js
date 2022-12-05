@@ -10,14 +10,14 @@ const firebaseConfig = {
   storageBucket: "healthy-heels-809aa.appspot.com",
   messagingSenderId: "1068590615575",
   appId: "1:1068590615575:web:25c48efa74896c9e91e052",
-  measurementId: "G-2TJ5YLBYFN"
+  measurementId: "G-2TJ5YLBYFN",
 };
 
 firebase.initializeApp(firebaseConfig);
 
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
-const db = firebase.firestore()
-const auth = firebase.auth()
-const storageBucket = firebase.storage()
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const db = firebase.firestore();
+const auth = firebase.auth();
+const storageBucket = firebase.storage();
 
-export {db, auth, googleAuthProvider, storageBucket} 
+export { db, auth, googleAuthProvider, storageBucket };
